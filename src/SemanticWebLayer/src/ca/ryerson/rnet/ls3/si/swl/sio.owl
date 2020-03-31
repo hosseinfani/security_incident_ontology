@@ -1,0 +1,672 @@
+@prefix : <http://ls3.rnet.ryerson.ca/ontologies/sio#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@base <http://ls3.rnet.ryerson.ca/ontologies/sio> .
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio> rdf:type owl:Ontology ;
+                                            
+                                            rdfs:comment """The Security Incident Ontology wants to represent the security incidents happen in the Ryerson University urban campus. 
+
+The ontology is developed as final project of EE8605 Semantic Web Technologies course, Department of Electrical & Computer Engineering, Ryerson University, Fall 2014 by Hossein Fani."""^^rdfs:Literal ;
+                                            
+                                            owl:versionIRI <http://ls3.rnet.ryerson.ca/ontologies/sio/1.0.0> ;
+                                            
+                                            owl:imports <http://purl.org/NET/c4dm/event.owl> ,
+                                                        foaf: ;
+                                            
+                                            rdfs:isDefinedBy <https://sites.google.com/site/hosseinfani> .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#alt
+
+geo:alt rdf:type owl:AnnotationProperty ;
+        
+        rdfs:label "altitude" ;
+        
+        rdfs:comment """The WGS84 altitude of a SpatialThing (decimal meters 
+above the local reference ellipsoid).""" ;
+        
+        rdfs:domain geo:SpatialThing .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#lat
+
+geo:lat rdf:type owl:AnnotationProperty ;
+        
+        rdfs:label "latitude" ;
+        
+        rdfs:comment "The WGS84 latitude of a SpatialThing (decimal degrees)." ;
+        
+        rdfs:domain geo:SpatialThing .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#location
+
+geo:location rdf:type owl:AnnotationProperty ;
+             
+             rdfs:label "location" ;
+             
+             rdfs:comment """The relation between something and the point, 
+ or other geometrical thing in space, where it is.  For example, the realtionship between
+ a radio tower and a Point with a given lat and long.
+ Or a relationship between a park and its outline as a closed arc of points, or a road and
+ its location as a arc (a sequence of points).
+ Clearly in practice there will be limit to the accuracy of any such statement, but one would expect
+ an accuracy appropriate for the size of the object and uses such as mapping .
+ """ ;
+             
+             rdfs:subPropertyOf foaf:based_near .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#long
+
+geo:long rdf:type owl:AnnotationProperty ;
+         
+         rdfs:label "longitude" ;
+         
+         rdfs:comment "The WGS84 longitude of a SpatialThing (decimal degrees)." ;
+         
+         rdfs:domain geo:SpatialThing .
+
+
+
+###  http://xmlns.com/foaf/0.1/based_near
+
+foaf:based_near rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Related
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Related> rdf:type owl:ObjectProperty ,
+                                                             owl:SymmetricProperty ,
+                                                             owl:TransitiveProperty ;
+                                                    
+                                                    rdfs:range <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> ;
+                                                    
+                                                    rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/ageProximity
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/ageProximity> rdf:type owl:AsymmetricProperty ,
+                                                                  owl:FunctionalProperty ,
+                                                                  owl:IrreflexiveProperty ,
+                                                                  owl:ObjectProperty ;
+                                                         
+                                                         rdfs:range <http://ls3.rnet.ryerson.ca/ontologies/sio/ProximityAdverb> ;
+                                                         
+                                                         rdfs:subPropertyOf owl:topObjectProperty ;
+                                                         
+                                                         rdfs:domain foaf:Agent .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/hairColor
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/hairColor> rdf:type owl:AsymmetricProperty ,
+                                                               owl:FunctionalProperty ,
+                                                               owl:IrreflexiveProperty ,
+                                                               owl:ObjectProperty ;
+                                                      
+                                                      rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/reportedInstant
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/reportedInstant> rdf:type owl:ObjectProperty ;
+                                                            
+                                                            rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> ;
+                                                            
+                                                            rdfs:range time:Instant .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/timeProximity
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/timeProximity> rdf:type owl:AsymmetricProperty ,
+                                                                   owl:FunctionalProperty ,
+                                                                   owl:IrreflexiveProperty ,
+                                                                   owl:ObjectProperty ;
+                                                          
+                                                          rdfs:range <http://ls3.rnet.ryerson.ca/ontologies/sio/ProximityAdverb> ;
+                                                          
+                                                          rdfs:domain time:Instant .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#location
+
+geo:location rdf:type owl:ObjectProperty ;
+             
+             rdfs:label "location" ;
+             
+             rdfs:comment """The relation between something and the point, 
+ or other geometrical thing in space, where it is.  For example, the realtionship between
+ a radio tower and a Point with a given lat and long.
+ Or a relationship between a park and its outline as a closed arc of points, or a road and
+ its location as a arc (a sequence of points).
+ Clearly in practice there will be limit to the accuracy of any such statement, but one would expect
+ an accuracy appropriate for the size of the object and uses such as mapping .
+ """ ;
+             
+             rdfs:range geo:SpatialThing .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/carrying
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/carrying> rdf:type owl:DatatypeProperty ;
+                                                     
+                                                     rdfs:domain foaf:Person .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/finalState
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/finalState> rdf:type owl:DatatypeProperty ;
+                                                       
+                                                       rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/formattedText
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/formattedText> rdf:type owl:DatatypeProperty ;
+                                                          
+                                                          rdfs:range rdf:XMLLiteral ;
+                                                          
+                                                          rdfs:domain geo:SpatialThing .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/height
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/height> rdf:type owl:DatatypeProperty ,
+                                                            owl:FunctionalProperty ;
+                                                   
+                                                   rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/postState
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/postState> rdf:type owl:DatatypeProperty ,
+                                                               owl:FunctionalProperty ;
+                                                      
+                                                      rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> ,
+                                                                  <http://ls3.rnet.ryerson.ca/ontologies/sio/Victim> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/preState
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/preState> rdf:type owl:DatatypeProperty ,
+                                                              owl:FunctionalProperty ;
+                                                     
+                                                     rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> ,
+                                                                 <http://ls3.rnet.ryerson.ca/ontologies/sio/Victim> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/weapon
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/weapon> rdf:type owl:DatatypeProperty ;
+                                                   
+                                                   rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/AssualtWithWeapon> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/wearing
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/wearing> rdf:type owl:DatatypeProperty ;
+                                                    
+                                                    rdfs:domain foaf:Person .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/weight
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/weight> rdf:type owl:DatatypeProperty ,
+                                                            owl:FunctionalProperty ;
+                                                   
+                                                   rdfs:domain <http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#formattedGeo
+
+geo:formattedGeo rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain geo:Point .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#lat
+
+geo:lat rdf:type owl:DatatypeProperty ;
+        
+        rdfs:label "latitude" ;
+        
+        rdfs:comment "The WGS84 latitude of a SpatialThing (decimal degrees)." .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#long
+
+geo:long rdf:type owl:DatatypeProperty ;
+         
+         rdfs:label "longitude" ;
+         
+         rdfs:comment "The WGS84 longitude of a SpatialThing (decimal degrees)." .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Assault
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Assault> rdf:type owl:Class ;
+                                                    
+                                                    rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/AssualtWithWeapon
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/AssualtWithWeapon> rdf:type owl:Class ;
+                                                              
+                                                              rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/Assault> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Color
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Color> rdf:type owl:Class .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/CommunityMember
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/CommunityMember> rdf:type owl:Class ;
+                                                            
+                                                            rdfs:subClassOf foaf:Person .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/FacultyMember
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/FacultyMember> rdf:type owl:Class ;
+                                                          
+                                                          rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/CommunityMember> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/IndecentExposure
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/IndecentExposure> rdf:type owl:Class ;
+                                                             
+                                                             rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/ProximityAdverb
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/ProximityAdverb> rdf:type owl:Class .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Robbery
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Robbery> rdf:type owl:Class ;
+                                                    
+                                                    rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> rdf:type owl:Class ;
+                                                             
+                                                             rdfs:subClassOf <http://purl.org/NET/c4dm/event.owl#Event> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityService
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityService> rdf:type owl:Class ;
+                                                            
+                                                            rdfs:subClassOf foaf:Organization .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/SexualAssault
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/SexualAssault> rdf:type owl:Class ;
+                                                          
+                                                          rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/Assault> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Staff
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Staff> rdf:type owl:Class ;
+                                                  
+                                                  rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/CommunityMember> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Student
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Student> rdf:type owl:Class ;
+                                                    
+                                                    rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/CommunityMember> .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Subject
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Subject> rdf:type owl:Class ;
+                                                    
+                                                    rdfs:subClassOf foaf:Person .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Victim
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Victim> rdf:type owl:Class ;
+                                                   
+                                                   rdfs:subClassOf foaf:Person .
+
+
+
+###  http://ls3.rnet.ryerson.ca/ontologies/sio/Voyeurism
+
+<http://ls3.rnet.ryerson.ca/ontologies/sio/Voyeurism> rdf:type owl:Class ;
+                                                      
+                                                      rdfs:subClassOf <http://ls3.rnet.ryerson.ca/ontologies/sio/SecurityIncident> .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#Point
+
+geo:Point rdf:type owl:Class ;
+          
+          rdfs:label "point" ;
+          
+          rdfs:subClassOf geo:SpatialThing ;
+          
+          rdfs:comment """ 
+Uniquely identified by lat/long/alt. i.e.
+
+spaciallyIntersects(P1, P2) :- lat(P1, LAT), long(P1, LONG), alt(P1, ALT),
+  lat(P2, LAT), long(P2, LONG), alt(P2, ALT).
+
+sameThing(P1, P2) :- type(P1, Point), type(P2, Point), spaciallyIntersects(P1, P2).
+  """ ,
+                       """A point, typically described using a coordinate system relative to Earth, such as WGS84.
+  """ .
+
+
+
+###  http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing
+
+geo:SpatialThing rdf:type owl:Class ;
+                 
+                 rdfs:label "SpatialThing" ;
+                 
+                 rdfs:comment """Anything with spatial extent, i.e. size, shape, or position.
+ e.g. people, places, bowling balls, as well as abstract areas like cubes.
+""" .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSatelliteSynset
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSatelliteSynset> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSatelliteWordSense
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSatelliteWordSense> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSynset
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveSynset> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveWordSense
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdjectiveWordSense> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdverbSynset
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdverbSynset> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/AdverbWordSense
+
+<http://www.w3.org/2006/03/wn/wn20/schema/AdverbWordSense> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/Collocation
+
+<http://www.w3.org/2006/03/wn/wn20/schema/Collocation> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/NounSynset
+
+<http://www.w3.org/2006/03/wn/wn20/schema/NounSynset> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/NounWordSense
+
+<http://www.w3.org/2006/03/wn/wn20/schema/NounWordSense> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/VerbSynset
+
+<http://www.w3.org/2006/03/wn/wn20/schema/VerbSynset> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/VerbWordSense
+
+<http://www.w3.org/2006/03/wn/wn20/schema/VerbWordSense> rdf:type owl:Class .
+
+
+
+###  http://www.w3.org/2006/03/wn/wn20/schema/Word
+
+<http://www.w3.org/2006/03/wn/wn20/schema/Word> rdf:type owl:Class .
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+###  https://sites.google.com/site/hosseinfani
+
+<https://sites.google.com/site/hosseinfani> rdf:type owl:NamedIndividual ,
+                                                     foaf:Person ;
+                                            
+                                            foaf:birthday "11-09-1983"^^xsd:dateTime ;
+                                            
+                                            foaf:familyName "Fani"^^rdfs:Literal ;
+                                            
+                                            foaf:firstName "Hossein"^^rdfs:Literal .
+
+
+
+
+
+#################################################################
+#
+#    Annotations
+#
+#################################################################
+
+
+geo: rdfs:label "geo" ;
+     
+     <http://purl.org/dc/elements/1.1/date> "$Date: 2009/04/20 15:00:30 $" ;
+     
+     rdfs:comment """
+Recent changes to this namespace:
+$Log: wgs84_pos.rdf,v $
+Revision 1.22  2009/04/20 15:00:30  timbl
+Remove the time bits which have been deal with elsewhere eg in iCal.
+
+Revision 1.21  2009/04/20 12:52:47  timbl
+try again
+
+Revision 1.20  2009/04/20 12:42:11  timbl
+Add Event (edited ages ago and never checked in), and location (following discussion http://chatlogs.planetrdf.com/swig/2009-04-20#T12-36-09)
+
+Revision 1.19  2009/04/20 12:36:31  timbl
+Add Event (edited ages ago and never checked in), and location (following discussion http://chatlogs.planetrdf.com/swig/2009-04-20#T12-36-09)
+
+Revision 1.18  2006/02/01 22:01:04  danbri
+Clarified that lat and long are decimal degrees, and that alt is decimal metres about local reference ellipsoid
+
+Revision 1.17  2004/02/06 17:38:12  danbri
+Fixed a bad commit screwup
+
+Revision 1.15  2003/04/19 11:24:08  danbri
+Fixed the typo even more.
+
+Revision 1.14  2003/04/19 11:16:56  danbri
+fixed a typo
+
+Revision 1.13  2003/02/19 22:27:27  connolly
+relaxed domain constraints on lat/long/alt from Point to SpatialThing
+
+Revision 1.12  2003/01/12 01:41:41  danbri
+Trying local copy of XSLT doc.
+
+Revision 1.11  2003/01/12 01:20:18  danbri
+added a link to morten's xslt rdfs viewer.
+
+Revision 1.10  2003/01/11 18:56:49  danbri
+Removed datatype range from lat and long properties, since they would
+have required each occurance of the property to mention the datatype.
+
+Revision 1.9  2003/01/11 11:41:31  danbri
+Another typo; repaired rdfs:Property to rdf:Property x4
+
+Revision 1.8  2003/01/11 11:05:02  danbri
+Added an rdfs:range for each lat/long/alt property,
+http://www.w3.org/2001/XMLSchema#float
+
+Revision 1.7  2003/01/10 20:25:16  danbri
+Longer rdfs:comment for Point, trying to be Earth-centric and neutral about
+coordinate system(s) at the same time. Feedback welcomed.
+
+Revision 1.6  2003/01/10 20:18:30  danbri
+Added CVS log comments into the RDF/XML as an rdfs:comment property of the
+vocabulary. Note that this is not common practice (but seems both harmless
+and potentially useful).
+
+
+revision 1.5
+date: 2003/01/10 20:14:31;  author: danbri;  state: Exp;  lines: +16 -5
+Updated schema:
+Added a dc:date, added url for more info. Changed the rdfs:label of the
+namespace from gp to geo. Added a class Point, set as the rdfs:domain of
+each property. Added XML comment on the lat_long property suggesting that
+we might not need it (based on #rdfig commentary from implementors).
+
+revision 1.4
+date: 2003/01/10 20:01:07;  author: danbri;  state: Exp;  lines: +6 -5
+Fixed typo; several rdfs:about attributes are now rdf:about. Thanks to MortenF in
+#rdfig for catching this error.
+
+revision 1.3
+date: 2003/01/10 11:59:03;  author: danbri;  state: Exp;  lines: +4 -3
+fixed buglet in vocab, added more wgs links
+
+revision 1.2
+date: 2003/01/10 11:01:11;  author: danbri;  state: Exp;  lines: +4 -4
+Removed alt from the as-a-flat-string property, and switched from
+space separated to comma separated.
+
+revision 1.1
+date: 2003/01/10 10:53:23;  author: danbri;  state: Exp;
+basic geo vocab
+
+""" ;
+     
+     <http://purl.org/dc/elements/1.1/title> "WGS84 Geo Positioning: an RDF vocabulary" ;
+     
+     <http://purl.org/dc/elements/1.1/description> """A vocabulary for representing latitude, longitude and 
+ altitude information in the WGS84 geodetic reference datum. 
+ Version $Id: wgs84_pos.rdf,v 1.22 2009/04/20 15:00:30 timbl Exp $. See http://www.w3.org/2003/01/geo/ for more details.""" .
+
+
+
+geo:lat_long rdfs:label "lat/long" ;
+             
+             rdfs:comment "A comma-separated representation of a latitude, longitude coordinate." .
+
+
+
+
+###  Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net
+
